@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lab_02.GameObjects
 {
-    internal class LevelElement
+    internal abstract class LevelElement
     {
+        public int positionX { get; set; }
+        public int positionY { get; set; }
+        public char DisplayedCharacter { get; set; }
+        ConsoleColor Color { get; set; }
+        public void Draw() 
+        {
+            
+        }
     }
 }

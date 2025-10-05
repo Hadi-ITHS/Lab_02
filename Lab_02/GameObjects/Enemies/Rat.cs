@@ -8,5 +8,14 @@ namespace Lab_02.GameObjects.Enemies
 {
     internal class Rat : Enemy
     {
+        public Rat (int x , int y)
+        {
+            positionX = x;
+            positionY = y;
+        }
+        public override void Update()
+        {
+
+        }
     }
 }

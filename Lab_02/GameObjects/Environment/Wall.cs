@@ -8,5 +8,11 @@ namespace Lab_02.GameObjects.Environment
 {
     internal class Wall : LevelElement
     {
+        public Wall(int x, int y) 
+        {
+            DisplayedCharacter = '#';
+            positionX = x;
+            positionY = y;
+        }
     }
 }

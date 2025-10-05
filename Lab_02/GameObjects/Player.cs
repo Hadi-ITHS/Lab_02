@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_02.GameObjects.Enemies
+namespace Lab_02.GameObjects
 {
-    internal class Snake : Enemy
+    internal class Player : LevelElement
     {
-        public Snake(int x, int y)
+        public Player (int x, int y)
         {
             positionX = x;
             positionY = y;
         }
-        public override void Update()
+        public Player() 
         {
-
+            DisplayedCharacter = '@';
         }
     }
 }
