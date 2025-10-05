@@ -10,8 +10,10 @@ namespace Lab_02.GameObjects.Enemies
     {
         public Snake(int x, int y)
         {
+            DisplayedCharacter = 's';
             positionX = x;
             positionY = y;
+            Color = ConsoleColor.DarkGreen;
         }
         public override void Update()
         {

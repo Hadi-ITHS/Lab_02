@@ -59,6 +59,10 @@ namespace Lab_02.GameObjects
                         }
                     }
                 }
+                foreach(var GameObject in element)
+                {
+                    GameObject.Draw();
+                }
             }
 
             catch (FileNotFoundException)

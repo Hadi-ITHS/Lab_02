@@ -12,9 +12,7 @@ namespace Lab_02.GameObjects
         {
             positionX = x;
             positionY = y;
-        }
-        public Player() 
-        {
+            Color = ConsoleColor.DarkBlue;
             DisplayedCharacter = '@';
         }
     }

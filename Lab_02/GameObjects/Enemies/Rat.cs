@@ -10,8 +10,10 @@ namespace Lab_02.GameObjects.Enemies
     {
         public Rat (int x , int y)
         {
+            DisplayedCharacter = 'r';
             positionX = x;
             positionY = y;
+            Color = ConsoleColor.DarkRed;
         }
         public override void Update()
         {

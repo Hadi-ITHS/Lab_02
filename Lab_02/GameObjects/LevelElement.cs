@@ -11,10 +11,10 @@ namespace Lab_02.GameObjects
         public int positionX { get; set; }
         public int positionY { get; set; }
         public char DisplayedCharacter { get; set; }
-        ConsoleColor Color { get; set; }
+        public ConsoleColor Color { get; set; }
         public void Draw() 
         {
-            
+
         }
     }
 }
