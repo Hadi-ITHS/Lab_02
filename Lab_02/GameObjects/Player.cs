@@ -8,10 +8,11 @@ namespace Lab_02.GameObjects
 {
     internal class Player : LevelElement
     {
-        public Player (int x, int y)
+        public Player (int x, int y, int spaceToNextElement)
         {
             positionX = x;
             positionY = y;
+            this.spaceToPreviousElement = spaceToNextElement;
             Color = ConsoleColor.DarkBlue;
             DisplayedCharacter = '@';
         }

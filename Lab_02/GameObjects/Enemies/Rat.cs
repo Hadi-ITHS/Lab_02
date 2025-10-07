@@ -8,11 +8,12 @@ namespace Lab_02.GameObjects.Enemies
 {
     internal class Rat : Enemy
     {
-        public Rat (int x , int y)
+        public Rat (int x , int y, int spaceToNextElement)
         {
             DisplayedCharacter = 'r';
             positionX = x;
             positionY = y;
+            this.spaceToPreviousElement = spaceToNextElement;
             Color = ConsoleColor.DarkRed;
         }
         public override void Update()

@@ -24,44 +24,55 @@ namespace Lab_02.GameObjects
                 {
                     int currentX = 1;
                     int currentY = 1;
-
+                    int spaceToPreviousElement = 0;
+                    bool isFirstObjectInLine = false;
+                    //reading the file and creating objects
                     while (!sr.EndOfStream)
                     {
                         switch ((char)sr.Read())
                         {
                             case '#':
-                                Wall wall = new Wall(currentX, currentY);
+                                Wall wall = new Wall(currentX, currentY, spaceToPreviousElement, isFirstObjectInLine);
                                 this.element.Add(wall);
                                 currentX++;
+                                spaceToPreviousElement = 0;
+                                if (isFirstObjectInLine)
+                                    isFirstObjectInLine = false;
                                 break;
                             case 'r':
-                                Rat rat = new Rat(currentX, currentY);
+                                Rat rat = new Rat(currentX, currentY, spaceToPreviousElement);
                                 this.element.Add(rat);
                                 currentX++;
+                                spaceToPreviousElement = 0;
                                 break;
                             case 's':
-                                Snake snake = new Snake(currentX, currentY);
+                                Snake snake = new Snake(currentX, currentY, spaceToPreviousElement);
                                 this.element.Add(snake);
                                 currentX++;
+                                spaceToPreviousElement = 0;
                                 break;
                             case '@':
-                                Player player = new Player(currentX, currentY);
+                                Player player = new Player(currentX, currentY, spaceToPreviousElement);
                                 this.element.Add(player);
                                 currentX++;
+                                spaceToPreviousElement = 0;
                                 break;
                             case '\n':
                                 currentY++;
                                 currentX = 1;
+                                spaceToPreviousElement = 0;
+                                isFirstObjectInLine = true;
                                 break;
                             default:
                                 currentX++;
+                                spaceToPreviousElement++;
                                 break;
                         }
                     }
                 }
-                foreach(var GameObject in element)
+                foreach (LevelElement item in this.element)
                 {
-                    GameObject.Draw();
+                    item.Draw();
                 }
             }
 
