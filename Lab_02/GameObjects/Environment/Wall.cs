@@ -33,5 +33,9 @@ namespace Lab_02.GameObjects.Environment
             Console.ForegroundColor = Color;
             Console.Write(DisplayedCharacter);
         }
+        public override void UpdatePosition(char input, List<LevelElement> elements)
+        {
+
+        }
     }
 }

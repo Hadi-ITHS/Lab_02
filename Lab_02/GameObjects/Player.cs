@@ -16,5 +16,31 @@ namespace Lab_02.GameObjects
             Color = ConsoleColor.DarkBlue;
             DisplayedCharacter = '@';
         }
+
+        public override void UpdatePosition(char input, List<LevelElement> elements)
+        {
+                Console.WriteLine("Input is recieved by player");
+            switch (input)
+            {
+                case 'a':
+                case 'A':
+                    Console.WriteLine("Move left");
+                    break;
+                case 's':
+                case 'S':
+                    Console.WriteLine("Move down");
+                    break;
+                case 'd':
+                case 'D':
+                    Console.WriteLine("Move right");
+                    break;
+                case 'w':
+                case 'W':
+                    Console.WriteLine("Move up");
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

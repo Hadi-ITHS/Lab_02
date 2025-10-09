@@ -1,6 +1,7 @@
-﻿using Lab_02.GameObjects;
+﻿using Lab_02.Services;
+
+GameService gs = new GameService();
+
+gs.StartGame();
 
 
-LevelData levelData = new LevelData();
-levelData.Load("Level1.txt");
-Console.ReadLine();

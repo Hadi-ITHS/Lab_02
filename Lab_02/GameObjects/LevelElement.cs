@@ -25,5 +25,7 @@ namespace Lab_02.GameObjects
             Console.ForegroundColor = Color;
             Console.Write(DisplayedCharacter);
         }
+
+        public abstract void UpdatePosition(char input, List<LevelElement> elements);
     }
 }

@@ -20,5 +20,9 @@ namespace Lab_02.GameObjects.Enemies
         {
 
         }
+        public override void UpdatePosition(char input, List<LevelElement> elements)
+        {
+
+        }
     }
 }

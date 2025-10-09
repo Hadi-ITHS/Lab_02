@@ -1,4 +1,5 @@
-﻿using Lab_02.GameObjects.Enemies;
+﻿using Lab_02.GameObjects;
+using Lab_02.GameObjects.Enemies;
 using Lab_02.GameObjects.Environment;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_02.GameObjects
+namespace Lab_02.Services
 {
     internal class LevelData
     {
@@ -33,7 +34,7 @@ namespace Lab_02.GameObjects
                         {
                             case '#':
                                 Wall wall = new Wall(currentX, currentY, spaceToPreviousElement, isFirstObjectInLine);
-                                this.element.Add(wall);
+                                element.Add(wall);
                                 currentX++;
                                 spaceToPreviousElement = 0;
                                 if (isFirstObjectInLine)
@@ -41,19 +42,19 @@ namespace Lab_02.GameObjects
                                 break;
                             case 'r':
                                 Rat rat = new Rat(currentX, currentY, spaceToPreviousElement);
-                                this.element.Add(rat);
+                                element.Add(rat);
                                 currentX++;
                                 spaceToPreviousElement = 0;
                                 break;
                             case 's':
                                 Snake snake = new Snake(currentX, currentY, spaceToPreviousElement);
-                                this.element.Add(snake);
+                                element.Add(snake);
                                 currentX++;
                                 spaceToPreviousElement = 0;
                                 break;
                             case '@':
                                 Player player = new Player(currentX, currentY, spaceToPreviousElement);
-                                this.element.Add(player);
+                                element.Add(player);
                                 currentX++;
                                 spaceToPreviousElement = 0;
                                 break;
@@ -70,7 +71,7 @@ namespace Lab_02.GameObjects
                         }
                     }
                 }
-                foreach (LevelElement item in this.element)
+                foreach (LevelElement item in element)
                 {
                     item.Draw();
                 }
