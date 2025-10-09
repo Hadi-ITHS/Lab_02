@@ -12,6 +12,7 @@ namespace Lab_02.GameObjects
         public int positionY { get; set; }
         public char DisplayedCharacter { get; set; }
         public ConsoleColor Color { get; set; }
+        protected List<LevelElement> element;
         public abstract void Update(char input);
         public void Draw()
         {

@@ -35,17 +35,17 @@ namespace Lab_02.Services
                                 currentX++;
                                 break;
                             case 'r':
-                                Rat rat = new Rat(currentX, currentY);
+                                Rat rat = new Rat(currentX, currentY, element);
                                 element.Add(rat);
                                 currentX++;
                                 break;
                             case 's':
-                                Snake snake = new Snake(currentX, currentY);
+                                Snake snake = new Snake(currentX, currentY, element);
                                 element.Add(snake);
                                 currentX++;
                                 break;
                             case '@':
-                                Player player = new Player(currentX, currentY);
+                                Player player = new Player(currentX, currentY, element);
                                 element.Add(player);
                                 currentX++;
                                 break;
