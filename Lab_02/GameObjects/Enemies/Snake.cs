@@ -8,19 +8,14 @@ namespace Lab_02.GameObjects.Enemies
 {
     internal class Snake : Enemy
     {
-        public Snake(int x, int y, int spaceToNextElement)
+        public Snake(int x, int y)
         {
             DisplayedCharacter = 's';
             positionX = x;
             positionY = y;
-            this.spaceToPreviousElement = spaceToNextElement;
             Color = ConsoleColor.DarkGreen;
         }
-        public override void Update()
-        {
-
-        }
-        public override void UpdatePosition(char input, List<LevelElement> elements)
+        public override void Update(char input)
         {
 
         }

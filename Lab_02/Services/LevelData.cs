@@ -17,56 +17,44 @@ namespace Lab_02.Services
             get { return element; }
         }
 
-        public void Load (string fileName)
-        {
+        public void Load (string fileName)        {
             try
             {
                 using (StreamReader sr = new StreamReader(fileName))
                 {
                     int currentX = 1;
                     int currentY = 1;
-                    int spaceToPreviousElement = 0;
-                    bool isFirstObjectInLine = false;
                     //reading the file and creating objects
                     while (!sr.EndOfStream)
                     {
                         switch ((char)sr.Read())
                         {
                             case '#':
-                                Wall wall = new Wall(currentX, currentY, spaceToPreviousElement, isFirstObjectInLine);
+                                Wall wall = new Wall(currentX, currentY);
                                 element.Add(wall);
                                 currentX++;
-                                spaceToPreviousElement = 0;
-                                if (isFirstObjectInLine)
-                                    isFirstObjectInLine = false;
                                 break;
                             case 'r':
-                                Rat rat = new Rat(currentX, currentY, spaceToPreviousElement);
+                                Rat rat = new Rat(currentX, currentY);
                                 element.Add(rat);
                                 currentX++;
-                                spaceToPreviousElement = 0;
                                 break;
                             case 's':
-                                Snake snake = new Snake(currentX, currentY, spaceToPreviousElement);
+                                Snake snake = new Snake(currentX, currentY);
                                 element.Add(snake);
                                 currentX++;
-                                spaceToPreviousElement = 0;
                                 break;
                             case '@':
-                                Player player = new Player(currentX, currentY, spaceToPreviousElement);
+                                Player player = new Player(currentX, currentY);
                                 element.Add(player);
                                 currentX++;
-                                spaceToPreviousElement = 0;
                                 break;
                             case '\n':
                                 currentY++;
                                 currentX = 1;
-                                spaceToPreviousElement = 0;
-                                isFirstObjectInLine = true;
                                 break;
                             default:
                                 currentX++;
-                                spaceToPreviousElement++;
                                 break;
                         }
                     }

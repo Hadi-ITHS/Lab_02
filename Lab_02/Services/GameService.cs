@@ -12,14 +12,14 @@ namespace Lab_02.Services
     {
         LevelData levelData = new LevelData();
         ConsoleKeyInfo input;
-        //Find a way to send the list that lives inside level data as argument to the update position method
+
         public void update(char input)
         {
             foreach (var item in levelData.Element)
             {
                 if (item is not Wall)
                 {
-                    item.UpdatePosition(input, levelData.Element);
+                    item.Update(input);
                 }
             }
         }

@@ -8,35 +8,60 @@ namespace Lab_02.GameObjects
 {
     internal class Player : LevelElement
     {
-        public Player (int x, int y, int spaceToNextElement)
+        public Player (int x, int y)
         {
             positionX = x;
             positionY = y;
-            this.spaceToPreviousElement = spaceToNextElement;
             Color = ConsoleColor.DarkBlue;
             DisplayedCharacter = '@';
         }
-
-        public override void UpdatePosition(char input, List<LevelElement> elements)
+        private void MoveRight ()
         {
-                Console.WriteLine("Input is recieved by player");
+            Console.SetCursorPosition (positionX, positionY);
+            Console.Write(' ');
+            positionX++;
+            Draw();
+        }
+        private void MoveLeft ()
+        {
+            Console.SetCursorPosition(positionX, positionY);
+            Console.Write(' ');
+            positionX--;
+            Draw();
+        }
+        private void MoveUp ()
+        {
+            Console.SetCursorPosition(positionX, positionY);
+            Console.Write(' ');
+            positionY--;
+            Draw();
+        }
+        private void MoveDown ()
+        {
+            Console.SetCursorPosition(positionX, positionY);
+            Console.Write(' ');
+            positionY++;
+            Draw();
+        }
+        public override void Update (char input)
+        {
             switch (input)
             {
                 case 'a':
                 case 'A':
-                    Console.WriteLine("Move left");
-                    break;
-                case 's':
-                case 'S':
-                    Console.WriteLine("Move down");
+                    MoveLeft();
                     break;
                 case 'd':
                 case 'D':
-                    Console.WriteLine("Move right");
+                    MoveRight();
                     break;
                 case 'w':
                 case 'W':
-                    Console.WriteLine("Move up");
+                    MoveUp();
+                    break;
+                case 's':
+                case 'S':
+                    MoveDown();
                     break;
                 default:
                     break;
