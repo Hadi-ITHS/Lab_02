@@ -26,6 +26,7 @@ namespace Lab_02.Services
         
         public void StartGame()
         {
+            Console.CursorVisible = false;
             levelData.Load("Level1.txt");
             for (int i = 0; i < 1; i--)
             {
