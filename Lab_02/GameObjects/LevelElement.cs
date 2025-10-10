@@ -15,8 +15,8 @@ namespace Lab_02.GameObjects
         public char DisplayedCharacter { get; set; }
         public ConsoleColor Color { get; set; }
         protected List<LevelElement> element;
-        public abstract void Update(char input);
-        public virtual void ElementOutOfRange ()
+        public abstract void Update(char input, LevelElement player);
+        public virtual void ElementOutOfVisionRange ()
         {
             if (IsDiscovered)
             {

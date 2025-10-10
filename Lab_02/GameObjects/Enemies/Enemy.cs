@@ -14,7 +14,7 @@ namespace Lab_02.GameObjects.Enemies
         public int HP { get; set; }
         public Dice AttackDice { get; set; }
         public Dice DefenceDice { get; set; }
-        public override void ElementOutOfRange()
+        public override void ElementOutOfVisionRange()
         {
             Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(positionX, positionY);

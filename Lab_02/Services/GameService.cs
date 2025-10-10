@@ -16,13 +16,13 @@ namespace Lab_02.Services
         LevelElement player;
         ConsoleKeyInfo input;
 
-        public void Update(char input)
+        public void Update(char input, LevelElement player)
         {
             foreach (var item in levelData.Element)
             {
                 if (item is not Wall)
                 {
-                    item.Update(input);
+                    item.Update(input, player);
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace Lab_02.Services
                     if (distanceToPlayer > 6)
                     {
                         item.IsVisible = false;
-                        item.ElementOutOfRange();
+                        item.ElementOutOfVisionRange();
                     }
                     else
                     {
@@ -61,7 +61,7 @@ namespace Lab_02.Services
             {
                 HandleVisionRange();
                 input = Console.ReadKey(true);
-                Update(input.KeyChar);
+                Update(input.KeyChar, player);
             }
         }
     }

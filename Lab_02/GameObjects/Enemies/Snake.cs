@@ -22,14 +22,6 @@ namespace Lab_02.GameObjects.Enemies
             directions.Add(3, 'w');
             directions.Add(4, 's');
             this.element = element;
-            foreach (var player in element)
-            {
-                if (player is Player)
-                { //the reference gets assigned to player here. But after execution, in Update() the
-                    //reference is null. WHY?!?!
-                    this.player = player;
-                }
-            }
         }
         private bool CheckMovementValidity(char input)
         {
@@ -119,37 +111,33 @@ namespace Lab_02.GameObjects.Enemies
                 Draw();
             }
         }
-        public override void Update(char input)
+        public override void Update(char input, LevelElement player)
         {
+
             if (IsVisible)
             {
                 var chosenDirection = new Random();
                 double distanceToPlayer;
-                //Delete the block if we get this part to work in constructor.
-                foreach (var player in element)
-                {
-                    if (player is Player)
-                    {
-                        this.player = player;
-                    }
-                }
                 distanceToPlayer = Math.Round(Math.Sqrt(Math.Abs(player.positionY - positionY) * Math.Abs(player.positionY - positionY) + Math.Abs(player.positionX - positionX) * Math.Abs(player.positionX - positionX)));
                 if (distanceToPlayer < 3)
                 {
-
-                    switch (chosenDirection.Next(1, 5))
+                    switch (input)
                     {
-                        case 1:
-                            MoveLeft(directions[1]);
+                        case 'a':
+                        case 'A':
+                            MoveLeft(input);
                             break;
-                        case 2:
-                            MoveRight(directions[2]);
+                        case 'd':
+                        case 'D':
+                            MoveRight(input);
                             break;
-                        case 3:
-                            MoveUp(directions[3]);
+                        case 'w':
+                        case 'W':
+                            MoveUp(input);
                             break;
-                        case 4:
-                            MoveDown(directions[4]);
+                        case 's':
+                        case 'S':
+                            MoveDown(input);
                             break;
                         default:
                             break;

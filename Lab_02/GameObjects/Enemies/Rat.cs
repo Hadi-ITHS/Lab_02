@@ -22,7 +22,7 @@ namespace Lab_02.GameObjects.Enemies
             directions.Add(3, 'w');
             directions.Add(4, 's');
         }
-        public override void Update(char input)
+        public override void Update(char input, LevelElement player)
         {
             if (IsVisible)
             {

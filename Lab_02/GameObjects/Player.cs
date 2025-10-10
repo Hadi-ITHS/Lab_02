@@ -107,7 +107,7 @@ namespace Lab_02.GameObjects
                 Draw();
             }
         }
-        public override void Update (char input)
+        public override void Update (char input, LevelElement player)
         {
             switch (input)
             {
