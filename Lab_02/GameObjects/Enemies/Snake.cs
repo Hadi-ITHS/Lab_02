@@ -22,12 +22,12 @@ namespace Lab_02.GameObjects.Enemies
             directions.Add(3, 'w');
             directions.Add(4, 's');
             this.element = element;
-            foreach (var item in element)
+            foreach (var player in element)
             {
-                if (item is Player)
+                if (player is Player)
                 { //the reference gets assigned to player here. But after execution, in Update() the
                     //reference is null. WHY?!?!
-                    this.player = item;
+                    this.player = player;
                 }
             }
         }
@@ -121,41 +121,42 @@ namespace Lab_02.GameObjects.Enemies
         }
         public override void Update(char input)
         {
-            var chosenDirection = new Random();
-            double distanceToPlayer;
-            foreach (var player in element)
+            if (IsVisible)
             {
-                if (player is Player)
+                var chosenDirection = new Random();
+                double distanceToPlayer;
+                //Delete the block if we get this part to work in constructor.
+                foreach (var player in element)
                 {
-                    this.player = player;
+                    if (player is Player)
+                    {
+                        this.player = player;
+                    }
                 }
-            }
-            distanceToPlayer = Math.Round(Math.Sqrt(Math.Abs(player.positionY - positionY) * Math.Abs(player.positionY - positionY) + Math.Abs(player.positionX - positionX) * Math.Abs(player.positionX - positionX)));
-            if (distanceToPlayer < 3)
-            {
-                
-                switch (chosenDirection.Next(1, 5))
+                distanceToPlayer = Math.Round(Math.Sqrt(Math.Abs(player.positionY - positionY) * Math.Abs(player.positionY - positionY) + Math.Abs(player.positionX - positionX) * Math.Abs(player.positionX - positionX)));
+                if (distanceToPlayer < 3)
                 {
-                    case 1:
-                        MoveLeft(directions[1]);
-                        break;
-                    case 2:
-                        MoveRight(directions[2]);
-                        break;
-                    case 3:
-                        MoveUp(directions[3]);
-                        break;
-                    case 4:
-                        MoveDown(directions[4]);
-                        break;
-                    default:
-                        break;
 
+                    switch (chosenDirection.Next(1, 5))
+                    {
+                        case 1:
+                            MoveLeft(directions[1]);
+                            break;
+                        case 2:
+                            MoveRight(directions[2]);
+                            break;
+                        case 3:
+                            MoveUp(directions[3]);
+                            break;
+                        case 4:
+                            MoveDown(directions[4]);
+                            break;
+                        default:
+                            break;
+
+                    }
                 }
             }
-            
-            /*Console.SetCursorPosition(1, 24);
-            Console.WriteLine(distanceToPlayer);*/
         }
     }
 }

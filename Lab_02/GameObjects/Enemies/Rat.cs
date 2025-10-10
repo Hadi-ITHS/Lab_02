@@ -24,26 +24,28 @@ namespace Lab_02.GameObjects.Enemies
         }
         public override void Update(char input)
         {
-            var chosenDirection = new Random();
-            switch (chosenDirection.Next (1,5))
+            if (IsVisible)
             {
-                case 1:
-                    MoveLeft(directions[1]);
-                    break;
-                case 2:
-                    MoveRight(directions[2]);
-                    break;
-                case 3:
-                    MoveUp(directions[3]);
-                    break;
-                case 4:
-                    MoveDown(directions[4]);
-                    break;
-                default:
-                    break;
+                var chosenDirection = new Random();
+                switch (chosenDirection.Next(1, 5))
+                {
+                    case 1:
+                        MoveLeft(directions[1]);
+                        break;
+                    case 2:
+                        MoveRight(directions[2]);
+                        break;
+                    case 3:
+                        MoveUp(directions[3]);
+                        break;
+                    case 4:
+                        MoveDown(directions[4]);
+                        break;
+                    default:
+                        break;
 
+                }
             }
-            
 
         }
         private bool CheckMovementValidity(char input)
