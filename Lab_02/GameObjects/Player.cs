@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -108,6 +109,8 @@ namespace Lab_02.GameObjects
         }
         public override void Update (char input)
         {
+            Console.SetCursorPosition(0, 23);
+            Console.WriteLine($"From player {positionX} + {positionY}");
             switch (input)
             {
                 case 'a':

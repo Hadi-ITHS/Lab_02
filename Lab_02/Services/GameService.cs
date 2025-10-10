@@ -13,7 +13,7 @@ namespace Lab_02.Services
         LevelData levelData = new LevelData();
         ConsoleKeyInfo input;
 
-        public void update(char input)
+        public void Update(char input)
         {
             foreach (var item in levelData.Element)
             {
@@ -31,7 +31,7 @@ namespace Lab_02.Services
             for (int i = 0; i < 1; i--)
             {
                 input = Console.ReadKey(true);
-                update(input.KeyChar);
+                Update(input.KeyChar);
             }
         }
     }
