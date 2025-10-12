@@ -17,7 +17,8 @@ namespace Lab_02.Services
             get { return element; }
         }
 
-        public void Load (string fileName)        {
+        public void Load (string fileName)        
+        {
             try
             {
                 using (StreamReader sr = new StreamReader(fileName))

@@ -7,24 +7,22 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Lab_02.Services
 {
     internal class GameService
     {
+        bool isGameRunning = true;
         LevelData levelData = new LevelData();
+        List<LevelElement> updatableElements = new List<LevelElement>();
         LevelElement player;
         ConsoleKeyInfo input;
 
         public void Update(char input, LevelElement player)
         {
-            foreach (var item in levelData.Element)
-            {
-                if (item is not Wall)
-                {
-                    item.Update(input, player);
-                }
-            }
+            foreach (var element in updatableElements)
+                element.Update(input, player);
         }
 
         public void HandleVisionRange ()
@@ -52,12 +50,24 @@ namespace Lab_02.Services
 
         public void StartGame()
         {
+            //initializing the game
             Console.CursorVisible = false;
             levelData.Load("Level1.txt");
-            foreach (var player in levelData.Element)
-                if (player is Player)
-                    this.player = player;
-            for (int i = 0; i > -1; i++)
+            foreach (var element in levelData.Element)
+            {
+                if (element is Player)
+                {
+                    this.player = element;
+                    updatableElements.Add(element);
+                }
+
+                else if (element is not Wall)
+                {
+                    updatableElements.Add(element);
+                }
+            }
+            //game loop
+            while (isGameRunning)
             {
                 HandleVisionRange();
                 input = Console.ReadKey(true);
