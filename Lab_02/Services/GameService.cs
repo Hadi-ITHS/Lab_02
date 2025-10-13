@@ -14,6 +14,7 @@ namespace Lab_02.Services
     internal class GameService
     {
         bool isGameRunning = true;
+        bool isPlayerAlive = true;
         LevelData levelData = new LevelData();
         List<LevelElement> updatableElements = new List<LevelElement>();
         LevelElement player;

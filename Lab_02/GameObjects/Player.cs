@@ -10,9 +10,12 @@ namespace Lab_02.GameObjects
 {
     internal class Player : LevelElement
     {
+        public string Name { get; set; }
+        int hp = 100;
         private bool IsMovementValid;
         public Player (int x, int y, List<LevelElement> element)
         {
+            Name = "Player";
             positionX = x;
             positionY = y;
             Color = ConsoleColor.DarkBlue;

@@ -12,6 +12,8 @@ namespace Lab_02.GameObjects.Enemies
         LevelElement player;
         public Snake(int x, int y, List<LevelElement> element)
         {
+            Name = "Snake";
+            HP = 25;
             DisplayedCharacter = 's';
             positionX = x;
             positionY = y;

@@ -11,6 +11,8 @@ namespace Lab_02.GameObjects.Enemies
         Dictionary<int, char> directions;
         public Rat (int x , int y, List<LevelElement> element)
         {
+            Name = "Rat";
+            HP = 10;
             DisplayedCharacter = 'r';
             positionX = x;
             positionY = y;
