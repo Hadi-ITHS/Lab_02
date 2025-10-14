@@ -16,6 +16,5 @@ namespace Lab_02.GameObjects.Environment
             positionX = x;
             positionY = y;
         }
-        public override void Update(char input, LevelElement player) { }
     }
 }

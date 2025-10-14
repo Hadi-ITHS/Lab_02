@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lab_02.GameObjects.Enemies
+{
+    internal enum Directions
+    {
+        left,
+        right,
+        up,
+        down,
+        up_right,
+        down_right,
+        up_left,
+        down_left,
+    }
+}

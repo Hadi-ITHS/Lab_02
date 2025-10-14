@@ -19,7 +19,15 @@ namespace Lab_02.GameObjects
         }
 
         public int Throw ()
-            { return numberOfDice * sidesPerDice + 2; }
+        {
+            int result = 0;
+            for (int i = 0; i < numberOfDice; i++)
+            {
+               result += Random.Shared.Next(sidesPerDice);
+            }
+
+            return result + modifier; 
+        }
 
         public override string ToString()
         {

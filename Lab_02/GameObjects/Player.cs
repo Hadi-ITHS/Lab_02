@@ -10,9 +10,13 @@ namespace Lab_02.GameObjects
 {
     internal class Player : LevelElement
     {
+        Dice attackDice = new Dice(2, 6, 2);
+        Dice defenceDice = new Dice(2, 6, 0);
         public string Name { get; set; }
         int hp = 100;
         private bool IsMovementValid;
+
+        protected List<LevelElement> element;
         public Player (int x, int y, List<LevelElement> element)
         {
             Name = "Player";
@@ -22,6 +26,15 @@ namespace Lab_02.GameObjects
             DisplayedCharacter = '@';
             this.element = element;
         }
+        public int Attack()
+        {
+            return attackDice.Throw();
+        }
+        public int Defence()
+        {
+            return defenceDice.Throw();
+        }
+
         private bool CheckMovementValidity (char input)
         {
             switch (input)
@@ -110,7 +123,7 @@ namespace Lab_02.GameObjects
                 Draw();
             }
         }
-        public override void Update (char input, LevelElement player)
+        public void Update (char input)
         {
             switch (input)
             {

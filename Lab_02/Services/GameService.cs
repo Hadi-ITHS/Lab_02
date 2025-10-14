@@ -16,17 +16,18 @@ namespace Lab_02.Services
         bool isGameRunning = true;
         bool isPlayerAlive = true;
         LevelData levelData = new LevelData();
-        List<LevelElement> updatableElements = new List<LevelElement>();
-        LevelElement player;
+        List<Enemy> updatableElements = new List<Enemy>();
+        Player player;
         ConsoleKeyInfo input;
 
-        public void Update(char input, LevelElement player)
+        private void Update(char input, Player player)
         {
+            player.Update(input);
             foreach (var element in updatableElements)
-                element.Update(input, player);
+                element.Update(player);
         }
 
-        public void HandleVisionRange ()
+        private void HandleVisionRange ()
         {
             foreach (var item in levelData.Element)
             {
@@ -49,6 +50,16 @@ namespace Lab_02.Services
             }
         }
 
+        /*private void HandleCombat (LevelElement player, LevelElement enemy)
+        {
+            double distanceToPlayer;
+            distanceToPlayer = Math.Round(Math.Sqrt(Math.Abs(player.positionY - enemy.positionY) * Math.Abs(player.positionY - enemy.positionY) + Math.Abs(player.positionX - enemy.positionX) * Math.Abs(player.positionX - enemy.positionX)));
+            if (distanceToPlayer < 1)
+            {
+                player.Attack()
+            }
+        }*/
+
         public void StartGame()
         {
             //initializing the game
@@ -58,13 +69,12 @@ namespace Lab_02.Services
             {
                 if (element is Player)
                 {
-                    this.player = element;
-                    updatableElements.Add(element);
+                    this.player = (Player)element;
                 }
 
-                else if (element is not Wall)
+                else if (element is Enemy)
                 {
-                    updatableElements.Add(element);
+                    updatableElements.Add((Enemy) element);
                 }
             }
             //game loop
