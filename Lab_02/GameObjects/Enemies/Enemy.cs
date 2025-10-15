@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab_02.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -10,18 +11,28 @@ namespace Lab_02.GameObjects.Enemies
 {
     internal abstract class Enemy : LevelElement
     {
+        public event ElementDestroyedEvent? EnemyDead;
         public string Name { get; set; }
-        public int HP { get; set; }
+        public int hp { get; set; }
         public Dice AttackDice { get; set; }
         public Dice DefenceDice { get; set; }
         protected List<LevelElement> element;
         public void OnAttackRecieved (object sender,object reciever, int eventId, int damage)
         {
+            var attacker = (Player)sender;
+            var defender = (Enemy)reciever;
             if (this.Equals(reciever))
             {
                 Console.SetCursorPosition(0, 25);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{this} is getting attacked by {sender}. The damage is {damage}");
+                Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Damage: {damage}, Current health: {hp}");
+                hp -= damage;
+                if (hp <= 0)
+                {
+                    Console.SetCursorPosition (positionX, positionY);
+                    Console.Write(' ');
+                    EnemyDead?.Invoke(this, (int)EventIds.EnemyDead);
+                }
             }
         }
         public abstract void Update(LevelElement player);

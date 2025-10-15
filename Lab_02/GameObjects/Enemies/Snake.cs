@@ -12,7 +12,7 @@ namespace Lab_02.GameObjects.Enemies
         public Snake(int x, int y, List<LevelElement> element)
         {
             Name = "Snake";
-            HP = 25;
+            hp = 25;
             DisplayedCharacter = 's';
             positionX = x;
             positionY = y;

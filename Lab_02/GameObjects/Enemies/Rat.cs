@@ -11,7 +11,7 @@ namespace Lab_02.GameObjects.Enemies
         public Rat (int x , int y, List<LevelElement> element)
         {
             Name = "Rat";
-            HP = 10;
+            hp = 10;
             DisplayedCharacter = 'r';
             positionX = x;
             positionY = y;

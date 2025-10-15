@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 namespace Lab_02.Services
 {
     public delegate void AttackEvent(object sender, object reciever, int eventId, int damage);
+    public delegate void ElementDestroyedEvent (object sender, int eventId);
 
     public enum EventIds
     {
         PlayerAttacks,
-        RatAttacks,
-        SnakeAttacks,
+        EnemyAttacks,
+        PlayerDead,
+        EnemyDead,
     }
 }

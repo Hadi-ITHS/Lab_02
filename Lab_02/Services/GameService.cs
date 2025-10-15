@@ -26,6 +26,17 @@ namespace Lab_02.Services
             foreach (var element in updatableElements)
                 element.Update(player);
         }
+        private void OnEnemyDead (object sender, int eventId)
+        {
+            var deadElement = (Enemy)sender;
+            Console.SetCursorPosition (0, 26);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"{deadElement.Name} is dead! The event id is {(EventIds)eventId}");
+            //Console.SetCursorPosition(deadElement.positionX, deadElement.positionY);
+            //Console.Write(' ');
+            updatableElements.Remove(deadElement);
+            levelData.Element.Remove(deadElement);
+        }
 
         private void HandleVisionRange ()
         {
@@ -65,7 +76,6 @@ namespace Lab_02.Services
                 if (element is Player)
                 {
                     this.player = (Player)element;
-                    //TODO: Here we should sobscribe player to All enemy attack events.
                 }
 
                 else if (element is Enemy)
@@ -73,9 +83,13 @@ namespace Lab_02.Services
                     updatableElements.Add((Enemy) element);
                 }
             }
-            //adding all enemies as subscribers to PlayerAttacks event
             foreach (var enemy in updatableElements)
+            {
                 player.PlayerAttacks += enemy.OnAttackRecieved;
+                enemy.EnemyDead += OnEnemyDead;
+            }
+                
+                
             //game loop
             while (isGameRunning)
             {
