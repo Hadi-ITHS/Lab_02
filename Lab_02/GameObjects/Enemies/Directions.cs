@@ -12,9 +12,5 @@ namespace Lab_02.GameObjects.Enemies
         right,
         up,
         down,
-        up_right,
-        down_right,
-        up_left,
-        down_left,
     }
 }

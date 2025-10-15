@@ -25,7 +25,7 @@ namespace Lab_02.GameObjects.Enemies
             if (IsVisible)
             {
                 var chosenDirection = new Random();
-                switch (chosenDirection.Next(0, 5))
+                switch (chosenDirection.Next(1, 5))
                 {
                     case 1:
                         MoveLeft();

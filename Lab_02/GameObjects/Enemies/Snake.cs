@@ -51,7 +51,7 @@ namespace Lab_02.GameObjects.Enemies
         {
             int difX = player.positionX - positionX;
             int difY = player.positionY - positionY;
-            if (difX > 0 && difY == 0)
+            if (difX > 0)
                 return Directions.right;
             else if (difX < 0)
                 return Directions.left;

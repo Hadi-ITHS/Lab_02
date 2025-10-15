@@ -1,4 +1,5 @@
-﻿using Lab_02.GameObjects.Environment;
+﻿using Lab_02.GameObjects.Enemies;
+using Lab_02.GameObjects.Environment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace Lab_02.GameObjects
         Dice defenceDice = new Dice(2, 6, 0);
         public string Name { get; set; }
         int hp = 100;
-        private bool IsMovementValid;
 
         protected List<LevelElement> element;
         public Player (int x, int y, List<LevelElement> element)
@@ -35,12 +35,11 @@ namespace Lab_02.GameObjects
             return defenceDice.Throw();
         }
 
-        private bool CheckMovementValidity (char input)
+        private bool CheckMovementValidity (Directions direction)
         {
-            switch (input)
+            switch (direction)
             {
-                case 'a':
-                case 'A':
+                case Directions.left:
                     foreach (LevelElement element in element)
                     {
                         if (element.positionX == positionX - 1 && element.positionY == positionY)
@@ -49,8 +48,7 @@ namespace Lab_02.GameObjects
                         }
                     }
                     return true;
-                case 'd':
-                case 'D':
+                case Directions.right:
                     foreach (LevelElement element in element)
                     {
                         if (element.positionX == positionX + 1 && element.positionY == positionY)
@@ -59,8 +57,7 @@ namespace Lab_02.GameObjects
                         }
                     }
                     return true;
-                case 'w':
-                case 'W':
+                case Directions.up:
                     foreach (LevelElement element in element)
                     {
                         if (element.positionX == positionX && element.positionY == positionY - 1)
@@ -69,8 +66,7 @@ namespace Lab_02.GameObjects
                         }
                     }
                     return true;
-                case 's':
-                case 'S':
+                case Directions.down:
                     foreach (LevelElement element in element)
                     {
                         if (element.positionX == positionX && element.positionY == positionY + 1)
@@ -83,9 +79,9 @@ namespace Lab_02.GameObjects
                     return false;
             }
         }
-        private void MoveRight (char input)
+        private void MoveRight ()
         {
-            if (CheckMovementValidity(input))
+            if (CheckMovementValidity(Directions.right))
             {
                 Console.SetCursorPosition(positionX, positionY);
                 Console.Write(' ');
@@ -93,9 +89,9 @@ namespace Lab_02.GameObjects
                 Draw();
             }
         }
-        private void MoveLeft (char input)
+        private void MoveLeft ()
         {
-            if (CheckMovementValidity(input))
+            if (CheckMovementValidity(Directions.left))
             {
                 Console.SetCursorPosition(positionX, positionY);
                 Console.Write(' ');
@@ -103,9 +99,9 @@ namespace Lab_02.GameObjects
                 Draw();
             }
         }
-        private void MoveUp (char input)
+        private void MoveUp ()
         {
-            if (CheckMovementValidity(input))
+            if (CheckMovementValidity(Directions.up))
             {
                 Console.SetCursorPosition(positionX, positionY);
                 Console.Write(' ');
@@ -113,9 +109,9 @@ namespace Lab_02.GameObjects
                 Draw();
             }
         }
-        private void MoveDown (char input)
+        private void MoveDown ()
         {
-            if (CheckMovementValidity(input))
+            if (CheckMovementValidity(Directions.down))
             {
                 Console.SetCursorPosition(positionX, positionY);
                 Console.Write(' ');
@@ -129,19 +125,19 @@ namespace Lab_02.GameObjects
             {
                 case 'a':
                 case 'A':
-                    MoveLeft(input);
+                    MoveLeft();
                     break;
                 case 'd':
                 case 'D':
-                    MoveRight(input);
+                    MoveRight();
                     break;
                 case 'w':
                 case 'W':
-                    MoveUp(input);
+                    MoveUp();
                     break;
                 case 's':
                 case 'S':
-                    MoveDown(input);
+                    MoveDown();
                     break;
                 default:
                     break;
