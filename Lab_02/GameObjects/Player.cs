@@ -1,5 +1,6 @@
 ﻿using Lab_02.GameObjects.Enemies;
 using Lab_02.GameObjects.Environment;
+using Lab_02.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Lab_02.GameObjects
 {
     internal class Player : LevelElement
     {
+        public event AttackEvent? PlayerAttacks;
+
         Dice attackDice = new Dice(2, 6, 2);
         Dice defenceDice = new Dice(2, 6, 0);
         public string Name { get; set; }
@@ -44,6 +47,8 @@ namespace Lab_02.GameObjects
                     {
                         if (element.positionX == positionX - 1 && element.positionY == positionY)
                         {
+                            if (element is Enemy)
+                                PlayerAttacks?.Invoke(this, element,(int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }
@@ -53,6 +58,8 @@ namespace Lab_02.GameObjects
                     {
                         if (element.positionX == positionX + 1 && element.positionY == positionY)
                         {
+                            if (element is Enemy)
+                                PlayerAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }
@@ -62,6 +69,8 @@ namespace Lab_02.GameObjects
                     {
                         if (element.positionX == positionX && element.positionY == positionY - 1)
                         {
+                            if (element is Enemy)
+                                PlayerAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }
@@ -71,6 +80,8 @@ namespace Lab_02.GameObjects
                     {
                         if (element.positionX == positionX && element.positionY == positionY + 1)
                         {
+                            if (element is Enemy)
+                                PlayerAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }

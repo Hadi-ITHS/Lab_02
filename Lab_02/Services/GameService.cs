@@ -50,15 +50,10 @@ namespace Lab_02.Services
             }
         }
 
-        /*private void HandleCombat (LevelElement player, LevelElement enemy)
+        private void HandleCombat ()
         {
-            double distanceToPlayer;
-            distanceToPlayer = Math.Round(Math.Sqrt(Math.Abs(player.positionY - enemy.positionY) * Math.Abs(player.positionY - enemy.positionY) + Math.Abs(player.positionX - enemy.positionX) * Math.Abs(player.positionX - enemy.positionX)));
-            if (distanceToPlayer < 1)
-            {
-                player.Attack()
-            }
-        }*/
+
+        }
 
         public void StartGame()
         {
@@ -70,6 +65,7 @@ namespace Lab_02.Services
                 if (element is Player)
                 {
                     this.player = (Player)element;
+                    //TODO: Here we should sobscribe player to All enemy attack events.
                 }
 
                 else if (element is Enemy)
@@ -77,6 +73,9 @@ namespace Lab_02.Services
                     updatableElements.Add((Enemy) element);
                 }
             }
+            //adding all enemies as subscribers to PlayerAttacks event
+            foreach (var enemy in updatableElements)
+                player.PlayerAttacks += enemy.OnAttackRecieved;
             //game loop
             while (isGameRunning)
             {

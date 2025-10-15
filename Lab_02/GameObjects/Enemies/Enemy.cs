@@ -15,6 +15,15 @@ namespace Lab_02.GameObjects.Enemies
         public Dice AttackDice { get; set; }
         public Dice DefenceDice { get; set; }
         protected List<LevelElement> element;
+        public void OnAttackRecieved (object sender,object reciever, int eventId, int damage)
+        {
+            if (this.Equals(reciever))
+            {
+                Console.SetCursorPosition(0, 25);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"{this} is getting attacked by {sender}. The damage is {damage}");
+            }
+        }
         public abstract void Update(LevelElement player);
         private bool CheckMovementValidity(Directions direction)
         {
