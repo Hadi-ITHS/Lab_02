@@ -13,6 +13,7 @@ namespace Lab_02.Services
 {
     internal class GameService
     {
+        string endGameText;
         bool isGameRunning = true;
         bool isPlayerAlive = true;
         LevelData levelData = new LevelData();
@@ -26,14 +27,26 @@ namespace Lab_02.Services
             foreach (var element in updatableElements)
                 element.Update(player);
         }
-        private void OnEnemyDead (object sender, int eventId)
+        private void OnPlayerDead(object sender, object destroyer,int eventId)
+        {
+            var attacker = (Enemy) destroyer;
+            Console.SetCursorPosition(0, 26);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"Player is dead! The event id is {(EventIds)eventId}");
+            Console.SetCursorPosition(player.positionX, player.positionY);
+            Console.Write(' ');
+            levelData.Element.Remove(player);
+            endGameText = $"You are killed by {attacker.Name}";
+            isPlayerAlive = false;
+        }
+        private void OnEnemyDead (object sender, object destroyer,int eventId)
         {
             var deadElement = (Enemy)sender;
             Console.SetCursorPosition (0, 26);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"{deadElement.Name} is dead! The event id is {(EventIds)eventId}");
-            //Console.SetCursorPosition(deadElement.positionX, deadElement.positionY);
-            //Console.Write(' ');
+            Console.SetCursorPosition(deadElement.positionX, deadElement.positionY);
+            Console.Write(' ');
             updatableElements.Remove(deadElement);
             levelData.Element.Remove(deadElement);
         }
@@ -66,7 +79,7 @@ namespace Lab_02.Services
 
         }
 
-        public void StartGame()
+        public string StartGame()
         {
             //initializing the game
             Console.CursorVisible = false;
@@ -76,6 +89,7 @@ namespace Lab_02.Services
                 if (element is Player)
                 {
                     this.player = (Player)element;
+                    player.PlayerDead += OnPlayerDead; 
                 }
 
                 else if (element is Enemy)
@@ -86,6 +100,7 @@ namespace Lab_02.Services
             foreach (var enemy in updatableElements)
             {
                 player.PlayerAttacks += enemy.OnAttackRecieved;
+                enemy.EnemyAttacks += player.OnAttackRecieved;
                 enemy.EnemyDead += OnEnemyDead;
             }
                 
@@ -96,7 +111,14 @@ namespace Lab_02.Services
                 HandleVisionRange();
                 input = Console.ReadKey(true);
                 Update(input.KeyChar, player);
+                if (!isPlayerAlive)
+                {
+                    Console.Clear();
+                    return endGameText;
+                }   
             }
+            Console.Clear();
+            return endGameText;
         }
     }
 }

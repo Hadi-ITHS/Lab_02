@@ -11,6 +11,7 @@ namespace Lab_02.GameObjects.Enemies
 {
     internal abstract class Enemy : LevelElement
     {
+        public event AttackEvent? EnemyAttacks;
         public event ElementDestroyedEvent? EnemyDead;
         public string Name { get; set; }
         public int hp { get; set; }
@@ -23,15 +24,13 @@ namespace Lab_02.GameObjects.Enemies
             var defender = (Enemy)reciever;
             if (this.Equals(reciever))
             {
+                hp -= damage;
                 Console.SetCursorPosition(0, 25);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Damage: {damage}, Current health: {hp}");
-                hp -= damage;
                 if (hp <= 0)
                 {
-                    Console.SetCursorPosition (positionX, positionY);
-                    Console.Write(' ');
-                    EnemyDead?.Invoke(this, (int)EventIds.EnemyDead);
+                    EnemyDead?.Invoke(this, sender,(int)EventIds.EnemyDead);
                 }
             }
         }
@@ -45,6 +44,8 @@ namespace Lab_02.GameObjects.Enemies
                     {
                         if (element.positionX == positionX - 1 && element.positionY == positionY)
                         {
+                            if (element is Player)
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }
@@ -54,6 +55,8 @@ namespace Lab_02.GameObjects.Enemies
                     {
                         if (element.positionX == positionX + 1 && element.positionY == positionY)
                         {
+                            if (element is Player)
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }
@@ -63,6 +66,8 @@ namespace Lab_02.GameObjects.Enemies
                     {
                         if (element.positionX == positionX && element.positionY == positionY - 1)
                         {
+                            if (element is Player)
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }
@@ -72,6 +77,8 @@ namespace Lab_02.GameObjects.Enemies
                     {
                         if (element.positionX == positionX && element.positionY == positionY + 1)
                         {
+                            if (element is Player)
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
                             return false;
                         }
                     }

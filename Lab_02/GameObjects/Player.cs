@@ -13,6 +13,7 @@ namespace Lab_02.GameObjects
     internal class Player : LevelElement
     {
         public event AttackEvent? PlayerAttacks;
+        public event ElementDestroyedEvent? PlayerDead;
 
         Dice attackDice = new Dice(2, 6, 2);
         Dice defenceDice = new Dice(2, 6, 0);
@@ -37,7 +38,18 @@ namespace Lab_02.GameObjects
         {
             return defenceDice.Throw();
         }
+        public void OnAttackRecieved (object sender, object reciever, int eventId, int damage)
+        {
+            hp -= damage;
 
+            Console.SetCursorPosition(0, 25);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"{this} is getting attacked by {sender}. Damage: {damage}, Current health: {hp}");
+            if (hp <= 0)
+            {
+                PlayerDead?.Invoke(this, sender, (int)EventIds.PlayerDead);
+            }
+        }
         private bool CheckMovementValidity (Directions direction)
         {
             switch (direction)
