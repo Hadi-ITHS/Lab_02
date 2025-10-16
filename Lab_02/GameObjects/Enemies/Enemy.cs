@@ -12,6 +12,7 @@ namespace Lab_02.GameObjects.Enemies
     internal abstract class Enemy : LevelElement
     {
         public event AttackEvent? EnemyAttacks;
+        public event DefenceEvent? EnemyDefences;
         public event ElementDestroyedEvent? EnemyDead;
         public string Name { get; set; }
         public int hp { get; set; }
@@ -22,16 +23,26 @@ namespace Lab_02.GameObjects.Enemies
         {
             var attacker = (Player)sender;
             var defender = (Enemy)reciever;
+            int attackResult = damage - Defence();
             if (this.Equals(reciever))
             {
-                hp -= damage;
-                Console.SetCursorPosition(0, 25);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Damage: {damage}, Current health: {hp}");
-                if (hp <= 0)
+                if (attackResult > 0)
                 {
-                    EnemyDead?.Invoke(this, sender,(int)EventIds.EnemyDead);
+                    hp -= attackResult;
+                    Console.SetCursorPosition(0, 23);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"Enemy:\n{defender.Name} is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
+                    Console.WriteLine("----------------------------------------");
                 }
+                else
+                {
+                    Console.SetCursorPosition(0, 23);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"Enemy:\n{attacker.Name} has attacked {defender.Name}. But the defence dice was greater than the attack dice. No damage is done!");
+                    Console.WriteLine("----------------------------------------");
+                }
+                if (hp <= 0)
+                    EnemyDead?.Invoke(this, sender, (int)EventIds.EnemyDead);
             }
         }
         public abstract void Update(LevelElement player);

@@ -13,6 +13,7 @@ namespace Lab_02.GameObjects
     internal class Player : LevelElement
     {
         public event AttackEvent? PlayerAttacks;
+        public event DefenceEvent? PlayerDefences;
         public event ElementDestroyedEvent? PlayerDead;
 
         Dice attackDice = new Dice(2, 6, 2);
@@ -23,6 +24,7 @@ namespace Lab_02.GameObjects
         protected List<LevelElement> element;
         public Player (int x, int y, List<LevelElement> element)
         {
+            IsVisible = true;
             Name = "Player";
             positionX = x;
             positionY = y;
@@ -40,15 +42,25 @@ namespace Lab_02.GameObjects
         }
         public void OnAttackRecieved (object sender, object reciever, int eventId, int damage)
         {
-            hp -= damage;
-
-            Console.SetCursorPosition(0, 25);
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"{this} is getting attacked by {sender}. Damage: {damage}, Current health: {hp}");
-            if (hp <= 0)
+            var attacker = (Enemy)sender;
+            int attackResult = damage - Defence();
+            if (attackResult > 0)
             {
-                PlayerDead?.Invoke(this, sender, (int)EventIds.PlayerDead);
+                hp -= attackResult;
+                Console.SetCursorPosition(0, 20);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"Player:\nPlayer is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
+                Console.WriteLine("----------------------------------------");
             }
+            else
+            {
+                Console.SetCursorPosition(0, 20);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"Enemy:\n{attacker.Name} has attacked the player. But the defence dice was greater than the attack dice. No damage is done!");
+                Console.WriteLine("----------------------------------------");
+            }
+                if (hp <= 0)
+                    PlayerDead?.Invoke(this, sender, (int)EventIds.PlayerDead);
         }
         private bool CheckMovementValidity (Directions direction)
         {

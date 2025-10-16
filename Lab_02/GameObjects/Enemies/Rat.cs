@@ -22,8 +22,10 @@ namespace Lab_02.GameObjects.Enemies
         }
         public override void Update(LevelElement player)
         {
-            if (IsVisible)
-            {
+            if (!IsVisible)
+                Color = ConsoleColor.Black;
+            else
+                Color = ConsoleColor.DarkRed;
                 var chosenDirection = new Random();
                 switch (chosenDirection.Next(1, 5))
                 {
@@ -43,7 +45,6 @@ namespace Lab_02.GameObjects.Enemies
                         break;
 
                 }
-            }
 
         }
         

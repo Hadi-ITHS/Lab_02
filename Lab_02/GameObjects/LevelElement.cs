@@ -31,9 +31,12 @@ namespace Lab_02.GameObjects
         }
         public void Draw()
         {
-            Console.ForegroundColor = Color;
-            Console.SetCursorPosition(positionX, positionY);
-            Console.Write(DisplayedCharacter);
+            if (IsVisible)
+            {
+                Console.ForegroundColor = Color;
+                Console.SetCursorPosition(positionX, positionY);
+                Console.Write(DisplayedCharacter);
+            }
         }
     }
 }
