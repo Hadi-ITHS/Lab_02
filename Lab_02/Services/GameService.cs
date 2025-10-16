@@ -15,11 +15,16 @@ namespace Lab_02.Services
 
         private void Update(char input, Player player)
         {
-            for (int i = 20; i < 27; i++)
-            {
-                Console.SetCursorPosition(0, i);
-                Console.Write(new string(' ', Console.WindowWidth));
-            }
+            Console.SetCursorPosition(0, 21);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 22);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 25);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 26);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 28);
+            Console.Write(new string(' ', Console.WindowWidth));
             player.Update(input);
             foreach (var element in updatableElements)
                 element.Update(player);
@@ -27,7 +32,7 @@ namespace Lab_02.Services
         private void OnPlayerDead(object sender, object destroyer, int eventId)
         {
             var attacker = (Enemy)destroyer;
-            Console.SetCursorPosition(0, 26);
+            Console.SetCursorPosition(0, 28);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"Player is dead! The event id is {(EventIds)eventId}");
             Console.SetCursorPosition(player.positionX, player.positionY);
@@ -39,7 +44,7 @@ namespace Lab_02.Services
         private void OnEnemyDead(object sender, object destroyer, int eventId)
         {
             var deadElement = (Enemy)sender;
-            Console.SetCursorPosition(0, 26);
+            Console.SetCursorPosition(0, 28);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"{deadElement.Name} is dead! The event id is {(EventIds)eventId}");
             Console.SetCursorPosition(deadElement.positionX, deadElement.positionY);
@@ -100,6 +105,16 @@ namespace Lab_02.Services
                 enemy.EnemyAttacks += player.OnAttackRecieved; //Event subscription
                 enemy.EnemyDead += OnEnemyDead; //Event subscription
             }
+            Console.SetCursorPosition(0, 20);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Player:");
+            Console.SetCursorPosition(0, 23);
+            Console.WriteLine("----------------------------------------");
+            Console.SetCursorPosition(0, 24);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Enemy:");
+            Console.SetCursorPosition(0, 27);
+            Console.WriteLine("----------------------------------------");
 
 
             //game loop

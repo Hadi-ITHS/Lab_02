@@ -47,20 +47,24 @@ namespace Lab_02.GameObjects
             if (attackResult > 0)
             {
                 hp -= attackResult;
-                Console.SetCursorPosition(0, 20);
+                Console.SetCursorPosition(0, 21);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"Player:\nPlayer is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
-                Console.WriteLine("----------------------------------------");
+                Console.WriteLine($"Player is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
+                Console.WriteLine();
             }
             else
             {
-                Console.SetCursorPosition(0, 20);
+                Console.SetCursorPosition(0, 21);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"Enemy:\n{attacker.Name} has attacked the player. But the defence dice was greater than the attack dice. No damage is done!");
-                Console.WriteLine("----------------------------------------");
+                Console.WriteLine($"{attacker.Name} has attacked the player. But the defence dice was greater than the attack dice. No damage is done!");
+                Console.WriteLine();
             }
                 if (hp <= 0)
                     PlayerDead?.Invoke(this, sender, (int)EventIds.PlayerDead);
+            //Create a similar event to PlayerAttacks for player. This event will be the counter attack that player does after a defence.
+            //Add a event id that defines this kind of attack is a counter attack.
+            //Then in OnAttackRecieved on enemy class check if it is a counter attack, then do not do another counter attack.
+            //Because we already have done it once. If we do not check this, it will be an infinite loop of attack and counter attacks.
         }
         private bool CheckMovementValidity (Directions direction)
         {

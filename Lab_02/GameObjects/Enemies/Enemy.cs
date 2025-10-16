@@ -29,20 +29,24 @@ namespace Lab_02.GameObjects.Enemies
                 if (attackResult > 0)
                 {
                     hp -= attackResult;
-                    Console.SetCursorPosition(0, 23);
+                    Console.SetCursorPosition(0, 25);
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"Enemy:\n{defender.Name} is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
-                    Console.WriteLine("----------------------------------------");
+                    Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
+                    Console.WriteLine();
                 }
                 else
                 {
-                    Console.SetCursorPosition(0, 23);
+                    Console.SetCursorPosition(0, 25);
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"Enemy:\n{attacker.Name} has attacked {defender.Name}. But the defence dice was greater than the attack dice. No damage is done!");
-                    Console.WriteLine("----------------------------------------");
+                    Console.WriteLine($"{attacker.Name} has attacked {defender.Name}. But the defence dice was greater than the attack dice. No damage is done!");
+                    Console.WriteLine();
                 }
                 if (hp <= 0)
+                {
                     EnemyDead?.Invoke(this, sender, (int)EventIds.EnemyDead);
+                    return;
+                }
+                //Create a similar event to EnemyAttacks for enemy. This event will be the counter attack that enemy does after a defence.
             }
         }
         public abstract void Update(LevelElement player);
