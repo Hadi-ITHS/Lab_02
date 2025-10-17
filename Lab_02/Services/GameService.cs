@@ -10,30 +10,33 @@ namespace Lab_02.Services
         bool isGameRunning = true;
         bool isPlayerAlive = true;
         LevelData levelData = new LevelData();
-        List<Enemy> updatableElements = new List<Enemy>();
+        List<Enemy> enemies = new List<Enemy>();
         Player player;
         ConsoleKeyInfo input;
 
         private void Update(char input, Player player)
         {
-            Console.SetCursorPosition(0, 21);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, 22);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, 25);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, 26);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, 28);
-            Console.Write(new string(' ', Console.WindowWidth));
-            player.Update(input);
-            for (int i = 0; i < updatableElements.Count; i++)
-                updatableElements[i].Update(player);
-            Console.SetCursorPosition(0, 20);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, 20);
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"Player/ Health: {player.HP}");
+            if (input == 'a' || input == 'A' || input == 's' || input == 'S' || input == 'd' || input == 'D' || input == 'w' || input == 'W')
+            {
+                Console.SetCursorPosition(0, 21);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, 22);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, 25);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, 26);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, 28);
+                Console.Write(new string(' ', Console.WindowWidth));
+                player.Update(input);
+                for (int i = 0; i < enemies.Count; i++)
+                    enemies[i].Update(player);
+                Console.SetCursorPosition(0, 20);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, 20);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"Player/ Health: {player.HP}");
+            }
         }
         private void OnPlayerDead(object sender, object destroyer, int eventId)
         {
@@ -51,11 +54,11 @@ namespace Lab_02.Services
         {
             var deadElement = (Enemy)sender;
             Console.SetCursorPosition(0, 28);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine($"{deadElement.Name} is dead! The event id is {(EventIds)eventId}");
             Console.SetCursorPosition(deadElement.positionX, deadElement.positionY);
             Console.Write(' ');
-            updatableElements.Remove(deadElement);
+            enemies.Remove(deadElement);
             levelData.Element.Remove(deadElement);
         }
 
@@ -96,10 +99,10 @@ namespace Lab_02.Services
 
                 else if (element is Enemy)
                 {
-                    updatableElements.Add((Enemy)element);
+                    enemies.Add((Enemy)element);
                 }
             }
-            foreach (var enemy in updatableElements)
+            foreach (var enemy in enemies)
             {
                 player.PlayerAttacks += enemy.OnAttackRecieved; //Event subscription
                 enemy.EnemyAttacks += player.OnAttackRecieved; //Event subscription
