@@ -21,19 +21,22 @@ namespace Lab_02.GameObjects.Enemies
         protected List<LevelElement> element;
         public void OnAttackRecieved (object sender,object reciever, int eventId, int damage)
         {
+            string attackType;
+            int defence = Defence();
+            int attackResult = damage - defence;
             var attacker = (Player)sender;
             var defender = (Enemy)reciever;
             if (this.Equals(reciever))
             {
                 if (eventId == 0) //If player does an attack
                 {
-                    DefenceCalculation(damage - Defence(), attacker, defender, damage, 25);
+                    DefenceCalculation(attackResult, attacker, defender, damage, defence, eventId,25);
                     if (hp > 0)
                         EnemyAttacks?.Invoke(this, sender, (int)EventIds.EnemyCounterAttacks, Attack());
                 }
                 else if (eventId == 4) //If player does a counter attack
                 {
-                    DefenceCalculation(damage - Defence(), attacker, defender, damage, 26);
+                    DefenceCalculation(attackResult, attacker, defender, damage, defence, eventId, 26);
                 }
                 if (hp <= 0)
                 {
@@ -42,20 +45,39 @@ namespace Lab_02.GameObjects.Enemies
                 }
             }
         }
-        private void DefenceCalculation(int attackResult, Player attacker, Enemy defender, int damage, int messegeLine)
+        private void DefenceCalculation(int attackResult, Player attacker, Enemy defender, int damage, int defence, int eventId, int messegeLine)
         {
-            if (attackResult > 0)
+            if (eventId == 0) //If player does an attack
             {
-                hp -= attackResult;
-                Console.SetCursorPosition(0, messegeLine);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
+                if (attackResult > 0)
+                {
+                    hp -= attackResult;
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Defence Dice: {DefenceDice.ToString()} | Attack Damage: {damage} | Defence Damage: {defence} | HP: {hp}");
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{defender.Name} has been attacked by {attacker.Name}. But the defence dice was greater than the attack dice. No damage is done!");
+                }
             }
-            else
+            else if (eventId == 4) //If player does a counter attack
             {
-                Console.SetCursorPosition(0, messegeLine);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{attacker.Name} has attacked {defender.Name}. But the defence dice was greater than the attack dice. No damage is done!");
+                if (attackResult > 0)
+                {
+                    hp -= attackResult;
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{attacker.Name} has done a counter attack on {defender.Name}. Defence Dice: {DefenceDice.ToString()} | Attack Damage: {damage} | Defence Damage: {defence} | HP: {hp}");
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{attacker.Name} has done a counter attack on {defender.Name}. But the defence dice was greater than the attack dice. No damage is done!");
+                }
             }
         }
         public abstract void Update(LevelElement player);

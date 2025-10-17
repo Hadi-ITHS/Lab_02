@@ -44,16 +44,18 @@ namespace Lab_02.GameObjects
         }
         public void OnAttackRecieved (object sender, object reciever, int eventId, int damage)
         {
+            int defence = Defence();
+            int attackResult = damage - defence;
             var attacker = (Enemy)sender;
             if (eventId == 1) //If enemy does an attack
             {
-                DefenceCalculation(damage - Defence(), attacker, damage, 21);
+                DefenceCalculation(attackResult, attacker, damage, defence, eventId, 21);
                 if (HP > 0)
                     PlayerAttacks?.Invoke(this, sender, (int)EventIds.PlayerCounterAttacks, Attack());
             }
             else if (eventId == 5) //If enemy does a counter attack
             {
-                DefenceCalculation(damage - Defence(), attacker, damage, 22);
+                DefenceCalculation(attackResult, attacker, damage, defence, eventId, 22);
             }
             if (HP <= 0)
             {
@@ -61,20 +63,39 @@ namespace Lab_02.GameObjects
                 return;
             }
         }
-        private void DefenceCalculation(int attackResult, Enemy attacker, int damage, int messegeLine)
+        private void DefenceCalculation(int attackResult, Enemy attacker, int damage, int defence, int eventId, int messegeLine)
         {
-            if (attackResult > 0)
+            if (eventId == 1) //If enemy does an attack
             {
-                HP -= attackResult;
-                Console.SetCursorPosition(0, messegeLine);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"Player is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {HP}");
+                if (attackResult > 0)
+                {
+                    HP -= attackResult;
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"Player is getting attacked by {attacker.Name}. Defence Dice: {defenceDice.ToString()} | Attack Damage: {damage} | Defence Damage: {defence} | HP: {HP}");
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"Player has been attacked by {attacker.Name}. But the defence dice was greater than the attack dice. No damage is done!");
+                }
             }
-            else
+            else if (eventId == 5) //If enemy does a counter attack
             {
-                Console.SetCursorPosition(0, messegeLine);
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"{attacker.Name} has attacked the player. But the defence dice was greater than the attack dice. No damage is done!");
+                if (attackResult > 0)
+                {
+                    HP -= attackResult;
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{attacker.Name} has done a counter attack on Player. Defence Dice: {defenceDice.ToString()} | Attack Damage: {damage} | Defence Damage: {defence} | HP: {HP}");
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, messegeLine);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{attacker.Name} has done a counter attack on Player. But the defence dice was greater than the attack dice. No damage is done!");
+                }
             }
         }
         private bool CheckMovementValidity (Directions direction)

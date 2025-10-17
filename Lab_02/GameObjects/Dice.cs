@@ -26,7 +26,7 @@ namespace Lab_02.GameObjects
                result += Random.Shared.Next(sidesPerDice);
             }
 
-            return result + modifier; 
+            return result + modifier;
         }
 
         public override string ToString()
