@@ -45,8 +45,6 @@ namespace Lab_02.GameObjects.Enemies
                         break;
 
                 }
-
         }
-        
     }
 }

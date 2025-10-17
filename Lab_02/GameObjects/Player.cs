@@ -48,7 +48,8 @@ namespace Lab_02.GameObjects
             if (eventId == 1) //If enemy does an attack
             {
                 DefenceCalculation(damage - Defence(), attacker, damage, 21);
-                PlayerAttacks?.Invoke(this, sender, (int)EventIds.PlayerCounterAttacks, Attack());
+                if (HP > 0)
+                    PlayerAttacks?.Invoke(this, sender, (int)EventIds.PlayerCounterAttacks, Attack());
             }
             else if (eventId == 5) //If enemy does a counter attack
             {
