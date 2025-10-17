@@ -16,5 +16,7 @@ namespace Lab_02.Services
         EnemyAttacks,
         PlayerDead,
         EnemyDead,
+        PlayerCounterAttacks,
+        EnemyCounterAttacks,
     }
 }

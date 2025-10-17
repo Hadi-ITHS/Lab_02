@@ -46,7 +46,6 @@ namespace Lab_02.GameObjects.Enemies
                 }
             }
         }
-
         private Directions DetectPlayerPosition(LevelElement player)
         {
             int difX = player.positionX - positionX;

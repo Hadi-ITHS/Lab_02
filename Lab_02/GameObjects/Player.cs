@@ -7,6 +7,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Lab_02.GameObjects
 {
@@ -19,11 +20,12 @@ namespace Lab_02.GameObjects
         Dice attackDice = new Dice(2, 6, 2);
         Dice defenceDice = new Dice(2, 6, 0);
         public string Name { get; set; }
-        int hp = 100;
+        public int HP { get; set; }
 
         protected List<LevelElement> element;
         public Player (int x, int y, List<LevelElement> element)
         {
+            HP = 100;
             IsVisible = true;
             Name = "Player";
             positionX = x;
@@ -43,28 +45,36 @@ namespace Lab_02.GameObjects
         public void OnAttackRecieved (object sender, object reciever, int eventId, int damage)
         {
             var attacker = (Enemy)sender;
-            int attackResult = damage - Defence();
+            if (eventId == 1) //If enemy does an attack
+            {
+                DefenceCalculation(damage - Defence(), attacker, damage, 21);
+                PlayerAttacks?.Invoke(this, sender, (int)EventIds.PlayerCounterAttacks, Attack());
+            }
+            else if (eventId == 5) //If enemy does a counter attack
+            {
+                DefenceCalculation(damage - Defence(), attacker, damage, 22);
+            }
+            if (HP <= 0)
+            {
+                PlayerDead?.Invoke(this, sender, (int)EventIds.PlayerDead);
+                return;
+            }
+        }
+        private void DefenceCalculation(int attackResult, Enemy attacker, int damage, int messegeLine)
+        {
             if (attackResult > 0)
             {
-                hp -= attackResult;
-                Console.SetCursorPosition(0, 21);
+                HP -= attackResult;
+                Console.SetCursorPosition(0, messegeLine);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"Player is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
-                Console.WriteLine();
+                Console.WriteLine($"Player is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {HP}");
             }
             else
             {
-                Console.SetCursorPosition(0, 21);
+                Console.SetCursorPosition(0, messegeLine);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"{attacker.Name} has attacked the player. But the defence dice was greater than the attack dice. No damage is done!");
-                Console.WriteLine();
             }
-                if (hp <= 0)
-                    PlayerDead?.Invoke(this, sender, (int)EventIds.PlayerDead);
-            //Create a similar event to PlayerAttacks for player. This event will be the counter attack that player does after a defence.
-            //Add a event id that defines this kind of attack is a counter attack.
-            //Then in OnAttackRecieved on enemy class check if it is a counter attack, then do not do another counter attack.
-            //Because we already have done it once. If we do not check this, it will be an infinite loop of attack and counter attacks.
         }
         private bool CheckMovementValidity (Directions direction)
         {

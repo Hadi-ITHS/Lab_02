@@ -23,30 +23,40 @@ namespace Lab_02.GameObjects.Enemies
         {
             var attacker = (Player)sender;
             var defender = (Enemy)reciever;
-            int attackResult = damage - Defence();
             if (this.Equals(reciever))
             {
-                if (attackResult > 0)
+                if (eventId == 0) //If player does an attack
                 {
-                    hp -= attackResult;
-                    Console.SetCursorPosition(0, 25);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
-                    Console.WriteLine();
+                    DefenceCalculation(damage - Defence(), attacker, defender, damage, 25);
+                    EnemyAttacks?.Invoke(this, sender, (int)EventIds.EnemyCounterAttacks, Attack());
                 }
-                else
+                else if (eventId == 4) //If player does a counter attack
                 {
-                    Console.SetCursorPosition(0, 25);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"{attacker.Name} has attacked {defender.Name}. But the defence dice was greater than the attack dice. No damage is done!");
-                    Console.WriteLine();
+                    DefenceCalculation(damage - Defence(), attacker, defender, damage, 26);
                 }
                 if (hp <= 0)
                 {
                     EnemyDead?.Invoke(this, sender, (int)EventIds.EnemyDead);
                     return;
                 }
-                //Create a similar event to EnemyAttacks for enemy. This event will be the counter attack that enemy does after a defence.
+            }
+        }
+        private void DefenceCalculation(int attackResult, Player attacker, Enemy defender, int damage, int messegeLine)
+        {
+            if (attackResult > 0)
+            {
+                hp -= attackResult;
+                Console.SetCursorPosition(0, messegeLine);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"{defender.Name} is getting attacked by {attacker.Name}. Attack Damage: {damage}, Attack Taken: {attackResult}, HP: {hp}");
+                Console.WriteLine(); //counter attack info
+            }
+            else
+            {
+                Console.SetCursorPosition(0, messegeLine);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"{attacker.Name} has attacked {defender.Name}. But the defence dice was greater than the attack dice. No damage is done!");
+                Console.WriteLine(); //counter attack info
             }
         }
         public abstract void Update(LevelElement player);
@@ -60,7 +70,7 @@ namespace Lab_02.GameObjects.Enemies
                         if (element.positionX == positionX - 1 && element.positionY == positionY)
                         {
                             if (element is Player)
-                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.EnemyAttacks, Attack());
                             return false;
                         }
                     }
@@ -71,7 +81,7 @@ namespace Lab_02.GameObjects.Enemies
                         if (element.positionX == positionX + 1 && element.positionY == positionY)
                         {
                             if (element is Player)
-                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.EnemyAttacks, Attack());
                             return false;
                         }
                     }
@@ -82,7 +92,7 @@ namespace Lab_02.GameObjects.Enemies
                         if (element.positionX == positionX && element.positionY == positionY - 1)
                         {
                             if (element is Player)
-                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.EnemyAttacks, Attack());
                             return false;
                         }
                     }
@@ -93,7 +103,7 @@ namespace Lab_02.GameObjects.Enemies
                         if (element.positionX == positionX && element.positionY == positionY + 1)
                         {
                             if (element is Player)
-                                EnemyAttacks?.Invoke(this, element, (int)EventIds.PlayerAttacks, Attack());
+                                EnemyAttacks?.Invoke(this, element, (int)EventIds.EnemyAttacks, Attack());
                             return false;
                         }
                     }

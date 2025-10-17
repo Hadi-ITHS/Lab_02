@@ -1,5 +1,6 @@
 ﻿using Lab_02.GameObjects;
 using Lab_02.GameObjects.Enemies;
+using System.Xml.Linq;
 
 namespace Lab_02.Services
 {
@@ -26,8 +27,13 @@ namespace Lab_02.Services
             Console.SetCursorPosition(0, 28);
             Console.Write(new string(' ', Console.WindowWidth));
             player.Update(input);
-            foreach (var element in updatableElements)
-                element.Update(player);
+            for (int i = 0; i < updatableElements.Count; i++)
+                updatableElements[i].Update(player);
+            Console.SetCursorPosition(0, 20);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 20);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"Player/ Health: {player.HP}");
         }
         private void OnPlayerDead(object sender, object destroyer, int eventId)
         {
@@ -75,12 +81,6 @@ namespace Lab_02.Services
                 }
             }
         }
-
-        private void HandleCombat()
-        {
-
-        }
-
         public string StartGame()
         {
             //initializing the game
@@ -107,15 +107,13 @@ namespace Lab_02.Services
             }
             Console.SetCursorPosition(0, 20);
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Player:");
+            Console.WriteLine($"Player/ Health: {player.HP}");
             Console.SetCursorPosition(0, 23);
             Console.WriteLine("----------------------------------------");
             Console.SetCursorPosition(0, 24);
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Enemy:");
+            Console.WriteLine("Enemy/");
             Console.SetCursorPosition(0, 27);
             Console.WriteLine("----------------------------------------");
-
 
             //game loop
             while (isGameRunning)
