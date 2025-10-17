@@ -55,7 +55,7 @@ namespace Lab_02.Services
             var deadElement = (Enemy)sender;
             Console.SetCursorPosition(0, 28);
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine($"{deadElement.Name} is dead! The event id is {(EventIds)eventId}");
+            Console.WriteLine($"{deadElement.Name} is dead!");
             Console.SetCursorPosition(deadElement.positionX, deadElement.positionY);
             Console.Write(' ');
             enemies.Remove(deadElement);
